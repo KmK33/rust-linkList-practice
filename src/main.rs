@@ -29,6 +29,21 @@ impl LinkList {
         }
     }
 
+    fn search_node(&mut self,target:i32) -> Option<i32>{
+        let mut current =  &self.head;
+
+        while let Some(ref  node) = current {
+            if node.value == target{
+                return Some(node.value);
+            }
+
+            current = &node.next;
+        };
+        None
+
+    
+    }
+
     fn traverse(&self) {
         let mut current = &self.head;
         while let Some(node) = current {
@@ -51,4 +66,10 @@ fn main() {
     list.append(3000);
 
     list.traverse();
+
+    if let Some(value) = list.search_node(30200){
+        println!("Value found {value}");
+    }else {
+        println!("Not found ")
+    }
 }
