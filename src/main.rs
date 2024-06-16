@@ -43,12 +43,13 @@ impl LinkList {
 
         let mut current = &mut self.head;
 
-        while let Some(ref mut node) = current  {
+        while let Some(ref mut  node) = current  {
             if let Some(ref mut next_node) = node.next {
-                if next_node.value == target{
+                if next_node.value == target {
                     node.next = next_node.next.take();
                     return;
                 }
+
             }
             current = &mut node.next;
         }
@@ -77,6 +78,36 @@ impl LinkList {
             current = &node.next
         }
     }
+
+    fn ll_len(&self) -> i32{
+        let mut current = &self.head;
+        let mut count = 0;
+
+        while let Some(ref node) = current {
+            count += 1;
+            current = &node.next;
+        }
+
+
+        count
+        
+    }
+
+    fn reverse_ll(&mut self) {
+       let mut current = self.head.take();
+       let mut prev: Option<Box<Node>> = None;
+
+       while let Some(mut curr) = current {
+           let next = curr.next.take();
+           curr.next = prev;
+           prev = Some(curr);
+           current = next;
+       } 
+
+       self.head = prev;
+
+        
+    }
 }
 
 
@@ -88,15 +119,16 @@ fn main() {
     list.append(1);
     list.append(2);
     list.append(3000);
+    list.append(11);
+    list.append(22);
+    list.append(30002);
 
     list.traverse();
 
-    if let Some(value) = list.search_node(30200){
-        println!("Value found {value}");
-    }else {
-        println!("Not found ")
-    }
-    list.delete_node(3000);
+    // println!("The length of link list is {}",list.ll_len());
+    list.reverse_ll();
 
     list.traverse();
+
+
 }
