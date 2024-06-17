@@ -1,9 +1,11 @@
-
+#[derive(Debug)]
 struct Node {
+
     value:i32,
     next:Option<Box<Node>>
 }
 
+#[derive(Debug)]
 struct LinkList{
     head:Option<Box<Node>>
 }
@@ -108,6 +110,31 @@ impl LinkList {
 
         
     }
+
+    
+    fn nth_node_from_end(&self,n:i32) -> Option<i32> {
+        let len = self.ll_len();
+
+        if n>len || n<= 0 {
+            println!("Invalid nth");
+            return None;
+        };
+
+        let target_index = len - n;
+        let mut current = &self.head;
+        let mut count = 0;
+
+
+        while let Some( node) = current  {
+            if count == target_index{
+                return Some(node.value);
+            };
+            count +=1;
+            current = &node.next;
+        };
+        None
+
+    }
 }
 
 
@@ -126,9 +153,14 @@ fn main() {
     list.traverse();
 
     // println!("The length of link list is {}",list.ll_len());
-    list.reverse_ll();
+    // list.reverse_ll();
 
-    list.traverse();
+   match list.nth_node_from_end(100) {
+       Some(val) => println!("Value:{val}"),
+       None => println!("Oops error occured:")
+   }
+
+    
 
 
 }
